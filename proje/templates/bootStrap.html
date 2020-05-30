@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="tr">
+
+<head>
+  <!-- Gerekli meta etiketler -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Statik -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='assets/bootstrap/css/bootstrap.min.css') }}" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='assets/fonts/fontawesome-all.min.css') }}" />
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon" />
+
+  {% if baslik %}
+  <title>{{ baslik }} | Betik Sistem Bilgi Ekranı</title>
+  {% else %}
+  <title>@keyiflerolsun | Gerçek Zamanlı Grafik</title>
+  {% endif %}
+</head>
+
+<body id="page-top">
+  <div id="wrapper">
+    <div class="d-flex flex-column" id="content-wrapper">
+      <div id="content">
+
+        <!-- NavBar -->
+        <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
+          <div class="container-fluid">
+            <div class="alert alert-success" role="alert" style="margin-top: 15px; width: initial;">
+              <span><strong>Betik </strong>Sistem Bilgi Ekranı</span>
+            </div>
+            <ul class="nav navbar-nav flex-nowrap ml-auto">
+              <div class="d-none d-sm-block topbar-divider"></div>
+              <li class="nav-item dropdown no-arrow" role="presentation">
+                <div class="nav-item dropdown no-arrow">
+                  <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">
+                    <span class="d-none d-lg-inline mr-2 text-gray-600 small">@keyiflerolsun</span>
+                    <img class="border rounded-circle img-profile"
+                      src="{{ url_for('static', filename='assets/img/avatars/keyiflerolsun.jpg')}}" />
+                  </a>
+                  <div class="dropdown-menu shadow dropdown-menu-right animated--grow-in" role="menu">
+                    <a class="dropdown-item" role="presentation" href="https://t.me/keyiflerolsun">
+                      <i class="fab fa-telegram fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Telegram
+                    </a>
+                    <a class="dropdown-item" role="presentation" href="https://instagram.com/keyiflerolsun">
+                      <i class="fab fa-instagram fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Instagram
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" role="presentation" href="https://t.me/KekikAkademi">
+                      <i class="fab fa-telegram-plane fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;@KekikAkademi
+                    </a>
+                    <a class="dropdown-item" role="presentation" href="https://t.me/BetikSonu">
+                      <i class="fab fa-telegram-plane fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;@BetikSonu
+                    </a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+        <div class="container-fluid">
+          <div class="d-sm-flex justify-content-center align-items-center mb-4">
+            <h3 class="text-dark mb-0" style="text-align: center;">
+              <i>{{ kullanici }}@{{ host }}</i><br>{{ sistem }} {{ surum }} | {{ makine }}<br>{{ ip }}
+            </h3>
+          </div>
+
+          <!-- Grafikler -->
+          <div class="row">
+
+            <div class="col-lg-5 col-xl-4">
+              <div class="card shadow mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <h6 class="text-primary font-weight-bold m-0">
+                    RAM Kullanımı
+                  </h6>
+                </div>
+                <div class="card-body">
+                  <div class="chart-area">
+                    <canvas id="ramKullanim" style="display: inline-block;"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-5 col-xl-4">
+              <div class="card shadow mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <h6 class="text-primary font-weight-bold m-0">
+                    CPU Kullanımı
+                  </h6>
+                </div>
+                <div class="card-body">
+                  <div class="chart-area">
+                    <canvas id="cpuKullanimi" style="display: inline-block;"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-5 col-xl-4">
+              <div class="card shadow mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <h6 class="text-primary font-weight-bold m-0">
+                    Şarj Seviyesi
+                  </h6>
+                </div>
+                <div class="card-body">
+                  <div class="chart-area">
+                    <canvas id="sarjSeviyesi" style="display: inline-block;"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bilgi Kartları -->
+          <div class="row">
+            <div class="col-md-6 col-xl-3 mb-4">
+              <div class="card shadow border-left-info py-2">
+                <div class="card-body">
+                  <div class="row align-items-center no-gutters">
+                    <div class="col mr-2">
+                      <div class="text-uppercase text-info font-weight-bold text-xs mb-1">
+                        <span>Başlangıç Zamanı</span>
+                      </div>
+                      <div class="text-dark font-weight-bold h5 mb-0">
+                        <span>{{ baslangicZamani }}</span>
+                      </div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-radiation-alt fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-xl-3 mb-4">
+              <div class="card shadow border-left-primary py-2">
+                <div class="card-body">
+                  <div class="row align-items-center no-gutters">
+                    <div class="col mr-2">
+                      <div class="text-uppercase text-primary font-weight-bold text-xs mb-1">
+                        <span>Bellek Bilgisi</span>
+                      </div>
+                      <div class="text-dark font-weight-bold h5 mb-0">
+                        <span>RAM {{ bellekBilgisi }}</span>
+                      </div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-database fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-xl-3 mb-4">
+              <div class="card shadow border-left-warning py-2">
+                <div class="card-body">
+                  <div class="row align-items-center no-gutters">
+                    <div class="col mr-2">
+                      <div class="text-uppercase text-warning font-weight-bold text-xs mb-1">
+                        <span>Ağ Bilgisi</span>
+                      </div>
+                      <div class="text-dark font-weight-bold h5 mb-0">
+                        <span>Gönderilen : {{ gonderilenByte }}</span>
+                        <br>
+                        <span>Alınan : {{ alinanByte }}</span>
+                      </div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="far fa-hdd fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-xl-3 mb-4">
+              <div class="card shadow border-left-success py-2">
+                <div class="card-body">
+                  <div class="row align-items-center no-gutters">
+                    <div class="col mr-2">
+                      <div class="text-uppercase text-success font-weight-bold text-xs mb-1">
+                        <span>Disk Bilgisi</span>
+                      </div>
+                      <div class="text-dark font-weight-bold h5 mb-0">
+                        <span>Okunan : {{ okunanByte }}</span>
+                        <br>
+                        <span>Yazılan : {{ yazilanByte }}</span>
+                      </div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-hdd fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- İşlem Listesi -->
+          <div class="row">
+            <div class="col">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      {% for anahtar in anahtarlar %}
+                      <th>{{ anahtar }}</th>
+                      {% endfor %}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for veri in veriler %}
+                    <tr>
+                      {% for anahtar, icerik in veri.items() %}
+                      <td>{{ veri[anahtar] }}</td>
+                      {% endfor %}
+                      <td><a href="/sonlandir/{{ veri['id'] }}" class="btn btn-danger">Sonlandır</button></td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="bg-white sticky-footer">
+        <div class="container my-auto">
+          <div class="text-center my-auto copyright">
+            <span>Copyright © @KekikAkademi 2020</span>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+    <a class="border rounded d-inline scroll-to-top" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+  </div>
+
+  <!-- JavaScript'ler -->
+  <script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/bootstrap/js/bootstrap.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/js/chart.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/js/bs-init.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+  <script src="{{ url_for('static', filename='assets/js/theme.js') }}"></script>
+  <script src="{{ url_for('static', filename='kaynakKullanimi.js') }}"></script>
+</body>
+
+</html>
