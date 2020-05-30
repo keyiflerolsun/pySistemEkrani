@@ -27,17 +27,18 @@ for gecerliIslem in islemDurumu:
     })
 
 
-import pandas as pd
-pandaVeri = pd.DataFrame(veri)
+# import pandas as pd
+# pandaVeri = pd.DataFrame(veri)
 
-from tabulate import tabulate
-gorselVeri = tabulate(pandaVeri, headers='keys', tablefmt='psql')
-# print(gorselVeri)
+# from tabulate import tabulate
+# gorselVeri = tabulate(pandaVeri, headers='keys', tablefmt='psql')
+# # print(gorselVeri)
 
-import json
-jsonVeri = json.loads(pandaVeri.to_json(orient='records'))
+# import json
+# jsonVeri = json.loads(pandaVeri.to_json(orient='records'))
 # print(jsonVeri)
 
+jsonVeri = veri
 anahtarlar = [ anahtar for anahtar in jsonVeri[0].keys() ]
 # print(anahtarlar)
 
