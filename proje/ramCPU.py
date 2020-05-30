@@ -21,8 +21,13 @@ def ram():
         while True:
             svmem = psutil.virtual_memory()
             cpufreq = psutil.cpu_freq()
-            sarjDurum = open("/sys/class/power_supply/BAT0/status", "r").readline().strip()
-            sarjSeviye = open("/sys/class/power_supply/BAT0/capacity", "r").readline().strip()
+            
+            try:
+                sarjDurum = open("/sys/class/power_supply/BAT0/status", "r").readline().strip()
+                sarjSeviye = open("/sys/class/power_supply/BAT0/capacity", "r").readline().strip()
+            except:
+                sarjDurum = "dosyayıOkuyamadım!"
+                sarjSeviye = 100
 
             json_data = json.dumps({
                 'ram_Boşta' : birimDonusturucu(svmem.available).split()[0],
